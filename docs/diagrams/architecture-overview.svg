@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 700" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#0969da"/>
+    </marker>
+  </defs>
+  <style>
+    .h1 { font-size: 18px; font-weight: 700; fill: #1f2328; }
+    .h2 { font-size: 14px; font-weight: 700; fill: #1f2328; }
+    .h3 { font-size: 12px; font-weight: 600; fill: #57606a; }
+    .t  { font-size: 13px; fill: #24292f; }
+    .s  { font-size: 12px; fill: #57606a; }
+    .box { fill: #fff; stroke: #d0d7de; stroke-width: 1.5; rx: 8; }
+    .dest { fill: #eef6ff; stroke: #0969da; stroke-width: 1.5; rx: 6; }
+    .ext  { fill: #dafbe1; stroke: #1a7f37; stroke-width: 1.5; rx: 6; }
+    .tool { fill: #fff8c5; stroke: #bf8700; stroke-width: 2; rx: 8; }
+    .ci   { fill: #ddf4ff; stroke: #0969da; stroke-width: 1.5; rx: 6; }
+    .out  { fill: #f6f8fa; stroke: #8b949e; stroke-width: 1.5; rx: 6; }
+    .line { stroke: #0969da; stroke-width: 2; fill: none; marker-end: url(#a); }
+  </style>
+
+  <text x="480" y="28" text-anchor="middle" class="h1">Customer bundle — how it works</text>
+  <text x="480" y="50" text-anchor="middle" class="s">Bundle creates extension repos with CI baked in. Customer pushes code there; CI publishes artifacts.</text>
+
+  <!-- STEP 1 -->
+  <rect x="30" y="70" width="900" height="165" class="box"/>
+  <text x="50" y="94" class="h2">Step 1 — Bootstrap (one time, by openg2p-customer-bundle)</text>
+
+  <rect x="50" y="110" width="200" height="95" class="tool"/>
+  <text x="150" y="135" text-anchor="middle" class="h2">customer-bundle</text>
+  <text x="150" y="155" text-anchor="middle" class="s">reads manifest</text>
+  <text x="150" y="173" text-anchor="middle" class="s">creates repos</text>
+  <text x="150" y="191" text-anchor="middle" class="s">seeds CI workflows</text>
+
+  <path d="M260,157 L300,157" class="line"/>
+
+  <text x="320" y="118" class="h3">DESTINATION REPOS (artifacts only — CI writes)</text>
+  <rect x="320" y="128" width="230" height="32" class="dest"/>
+  <text x="435" y="149" text-anchor="middle" class="t">{customer}-helm</text>
+  <rect x="320" y="168" width="230" height="32" class="dest"/>
+  <text x="435" y="189" text-anchor="middle" class="t">{customer}-versions</text>
+
+  <text x="620" y="118" class="h3">EXTENSION REPOS (customer writes code here)</text>
+  <rect x="580" y="128" width="320" height="28" class="ext"/>
+  <text x="740" y="147" text-anchor="middle" class="t">{customer}-registry  + CI workflows</text>
+  <rect x="580" y="162" width="320" height="28" class="ext"/>
+  <text x="740" y="181" text-anchor="middle" class="t">{customer}-bridge-connectors  + CI</text>
+  <rect x="580" y="196" width="320" height="28" class="ext"/>
+  <text x="740" y="215" text-anchor="middle" class="t">{customer}-pbms-connectors  + CI</text>
+
+  <!-- STEP 2 -->
+  <rect x="30" y="250" width="900" height="145" class="box"/>
+  <text x="50" y="269" class="h2">Step 2 — Customer develops in the extension repo</text>
+  <text x="50" y="289" class="s">Customer does NOT write in OpenG2P product cores. They only change their extension / connectors repo.</text>
+
+  <rect x="50" y="305" width="280" height="65" class="ext"/>
+  <text x="190" y="330" text-anchor="middle" class="h2">Extension repo</text>
+  <text x="190" y="350" text-anchor="middle" class="s">registry · bridge · pbms connectors</text>
+
+  <path d="M340,337 L390,337" class="line"/>
+  <text x="365" y="325" text-anchor="middle" class="s">push</text>
+
+  <rect x="400" y="305" width="200" height="65" class="ci"/>
+  <text x="500" y="330" text-anchor="middle" class="h2">CI (already in repo)</text>
+  <text x="500" y="350" text-anchor="middle" class="s">seeded by the bundle</text>
+
+  <rect x="640" y="305" width="260" height="65" class="out"/>
+  <text x="770" y="325" text-anchor="middle" class="h2">CI does on every push</text>
+  <text x="770" y="345" text-anchor="middle" class="s">1. compute version</text>
+  <text x="770" y="361" text-anchor="middle" class="s">2. build &amp; push Docker images</text>
+
+  <!-- STEP 3 -->
+  <rect x="30" y="410" width="900" height="265" class="box"/>
+  <text x="50" y="434" class="h2">Step 3 — CI publishes artifacts (automatic on push / merge / tag)</text>
+
+  <rect x="50" y="455" width="160" height="50" class="ext"/>
+  <text x="130" y="480" text-anchor="middle" class="t">Extension repo</text>
+  <text x="130" y="492" text-anchor="middle" class="s">+ CI workflows</text>
+
+  <path d="M220,480 L270,480" class="line"/>
+
+  <rect x="280" y="455" width="140" height="50" class="ci"/>
+  <text x="350" y="485" text-anchor="middle" class="t">CI pipeline</text>
+
+  <!-- three outputs -->
+  <path d="M420,470 L470,455" class="line"/>
+  <path d="M420,480 L470,505" class="line"/>
+  <path d="M420,490 L470,555" class="line"/>
+
+  <rect x="480" y="440" width="220" height="45" class="out"/>
+  <text x="590" y="458" text-anchor="middle" class="t">Private container registry</text>
+  <text x="590" y="476" text-anchor="middle" class="s">Docker images</text>
+
+  <rect x="480" y="495" width="220" height="45" class="dest"/>
+  <text x="590" y="513" text-anchor="middle" class="t">{customer}-helm</text>
+  <text x="590" y="531" text-anchor="middle" class="s">packaged .tgz + index.yaml</text>
+
+  <rect x="480" y="550" width="220" height="45" class="dest"/>
+  <text x="590" y="568" text-anchor="middle" class="t">{customer}-versions</text>
+  <text x="590" y="586" text-anchor="middle" class="s">CHANGELOG entry</text>
+
+  <path d="M700,517 L760,517" class="line"/>
+  <rect x="770" y="495" width="140" height="45" class="out"/>
+  <text x="840" y="513" text-anchor="middle" class="t">Rancher / Helm</text>
+  <text x="840" y="531" text-anchor="middle" class="s">deploys charts</text>
+
+  <text x="350" y="630" class="s">Summary: customer only pushes to the extension repo. Bundle-seeded CI computes version, builds Docker,</text>
+  <text x="350" y="648" class="s">pushes charts to {customer}-helm, and pushes changelog to {customer}-versions.</text>
+  <text x="350" y="666" class="s">Example: push to moz-registry → images on GHCR, charts in moz-helm, changelog in moz-versions.</text>
+</svg>

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 560" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#0969da"/>
+    </marker>
+  </defs>
+  <style>
+    .h1 { font-size: 18px; font-weight: 700; fill: #1f2328; }
+    .h2 { font-size: 14px; font-weight: 700; fill: #1f2328; }
+    .t  { font-size: 13px; fill: #24292f; }
+    .s  { font-size: 12px; fill: #57606a; }
+    .step { fill: #fff; stroke: #0969da; stroke-width: 2; rx: 8; }
+    .out  { fill: #dafbe1; stroke: #1a7f37; stroke-width: 1.5; rx: 8; }
+    .line { stroke: #0969da; stroke-width: 2; fill: none; marker-end: url(#a); }
+    .num  { font-size: 14px; font-weight: 700; fill: #0969da; }
+  </style>
+
+  <text x="360" y="28" text-anchor="middle" class="h1">CI publish flow (in the extension repo)</text>
+  <text x="360" y="50" text-anchor="middle" class="s">CI is seeded by the bundle when the extension repo is created. Runs on push / merge / tag.</text>
+
+  <rect x="200" y="75" width="320" height="44" class="step"/>
+  <text x="220" y="102" class="num">1</text>
+  <text x="245" y="102" class="t">Customer pushes code to extension repo</text>
+  <path d="M360,119 L360,143" class="line"/>
+
+  <rect x="200" y="143" width="320" height="44" class="step"/>
+  <text x="220" y="170" class="num">2</text>
+  <text x="245" y="170" class="t">CI (seeded by bundle) starts publish</text>
+  <path d="M360,187 L360,211" class="line"/>
+
+  <rect x="200" y="211" width="320" height="44" class="step"/>
+  <text x="220" y="238" class="num">3</text>
+  <text x="245" y="238" class="t">Compute version from branch / tag</text>
+  <path d="M360,255 L360,279" class="line"/>
+
+  <rect x="200" y="279" width="320" height="44" class="step"/>
+  <text x="220" y="306" class="num">4</text>
+  <text x="245" y="306" class="t">Build Docker image(s)</text>
+  <path d="M360,323 L360,347" class="line"/>
+
+  <rect x="200" y="347" width="320" height="44" class="step"/>
+  <text x="220" y="374" class="num">5</text>
+  <text x="245" y="374" class="t">Push images → private registry</text>
+  <path d="M360,391 L360,415" class="line"/>
+
+  <rect x="200" y="415" width="320" height="44" class="step"/>
+  <text x="220" y="442" class="num">6</text>
+  <text x="245" y="442" class="t">Push helm .tgz → {customer}-helm</text>
+  <path d="M360,459 L360,483" class="line"/>
+
+  <rect x="200" y="483" width="320" height="44" class="step"/>
+  <text x="220" y="510" class="num">7</text>
+  <text x="245" y="510" class="t">Push CHANGELOG → {customer}-versions</text>
+
+  <text x="600" y="360" class="h2">Outputs</text>
+  <rect x="560" y="375" width="160" height="36" class="out"/>
+  <text x="618" y="398" text-anchor="middle" class="t">Private registry</text>
+  <rect x="560" y="425" width="160" height="36" class="out"/>
+  <text x="620" y="448" text-anchor="middle" class="t">{customer}-helm</text>
+  <rect x="560" y="475" width="160" height="36" class="out"/>
+  <text x="630" y="498" text-anchor="middle" class="t">{customer}-versions</text>
+
+  <path d="M520,369 L558,395" class="line"/>
+  <path d="M520,440 L558,445" class="line"/>
+  <path d="M520,505 L558,495" class="line"/>
+</svg>

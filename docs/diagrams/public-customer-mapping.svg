@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="system-ui, -apple-system, sans-serif">
+  <style>
+    .h1 { font-size: 18px; font-weight: 700; fill: #1f2328; }
+    .h2 { font-size: 13px; font-weight: 700; fill: #fff; }
+    .t  { font-size: 13px; fill: #24292f; }
+    .s  { font-size: 12px; fill: #57606a; }
+    .hdr-public { fill: #0969da; }
+    .hdr-customer { fill: #1a7f37; }
+    .hdr-note { fill: #57606a; }
+    .cell { fill: #fff; stroke: #d0d7de; stroke-width: 1; }
+    .row-alt { fill: #f6f8fa; }
+    .arrow-col { fill: #f6f8fa; stroke: #d0d7de; stroke-width: 1; }
+  </style>
+
+  <text x="450" y="32" text-anchor="middle" class="h1">Public OpenG2P → customer private mapping</text>
+  <text x="450" y="54" text-anchor="middle" class="s">Extension repos are where the customer writes code; helm / versions are CI destinations only</text>
+
+  <rect x="40" y="75" width="240" height="32" class="hdr-public" rx="4"/>
+  <text x="160" y="96" text-anchor="middle" class="h2">Public OpenG2P</text>
+  <rect x="290" y="75" width="40" height="32" class="arrow-col"/>
+  <text x="310" y="96" text-anchor="middle" class="s">→</text>
+  <rect x="340" y="75" width="280" height="32" class="hdr-customer" rx="4"/>
+  <text x="480" y="96" text-anchor="middle" class="h2">Customer private repo</text>
+  <rect x="630" y="75" width="230" height="32" class="hdr-note" rx="4"/>
+  <text x="745" y="96" text-anchor="middle" class="h2">Role</text>
+
+  <rect x="40" y="107" width="240" height="40" class="cell"/>
+  <text x="160" y="132" text-anchor="middle" class="t">openg2p-helm</text>
+  <rect x="290" y="107" width="40" height="40" class="arrow-col"/>
+  <text x="310" y="132" text-anchor="middle" class="t">→</text>
+  <rect x="340" y="107" width="280" height="40" class="cell"/>
+  <text x="480" y="132" text-anchor="middle" class="t">{customer}-helm</text>
+  <rect x="630" y="107" width="230" height="40" class="cell"/>
+  <text x="745" y="125" text-anchor="middle" class="s">Destination — CI pushes</text>
+  <text x="745" y="141" text-anchor="middle" class="s">.tgz + index.yaml</text>
+
+  <rect x="40" y="147" width="240" height="40" class="row-alt cell"/>
+  <text x="160" y="172" text-anchor="middle" class="t">versions</text>
+  <rect x="290" y="147" width="40" height="40" class="arrow-col"/>
+  <text x="310" y="172" text-anchor="middle" class="t">→</text>
+  <rect x="340" y="147" width="280" height="40" class="row-alt cell"/>
+  <text x="480" y="172" text-anchor="middle" class="t">{customer}-versions</text>
+  <rect x="630" y="147" width="230" height="40" class="row-alt cell"/>
+  <text x="745" y="172" text-anchor="middle" class="s">Destination — CI pushes CHANGELOG</text>
+
+  <rect x="40" y="187" width="240" height="40" class="cell"/>
+  <text x="160" y="212" text-anchor="middle" class="t">farmer-registry</text>
+  <rect x="290" y="187" width="40" height="40" class="arrow-col"/>
+  <text x="310" y="212" text-anchor="middle" class="t">→</text>
+  <rect x="340" y="187" width="280" height="40" class="cell"/>
+  <text x="480" y="212" text-anchor="middle" class="t">{customer}-registry</text>
+  <rect x="630" y="187" width="230" height="40" class="cell"/>
+  <text x="745" y="205" text-anchor="middle" class="s">Extension repo — customer</text>
+  <text x="745" y="221" text-anchor="middle" class="s">code + seeded CI</text>
+
+  <rect x="40" y="227" width="240" height="40" class="row-alt cell"/>
+  <text x="160" y="252" text-anchor="middle" class="t">g2p-bridge-connectors</text>
+  <rect x="290" y="227" width="40" height="40" class="arrow-col"/>
+  <text x="310" y="252" text-anchor="middle" class="t">→</text>
+  <rect x="340" y="227" width="280" height="40" class="row-alt cell"/>
+  <text x="480" y="252" text-anchor="middle" class="t">{customer}-bridge-connectors</text>
+  <rect x="630" y="227" width="230" height="40" class="row-alt cell"/>
+  <text x="745" y="245" text-anchor="middle" class="s">Extension repo — customer</text>
+  <text x="745" y="261" text-anchor="middle" class="s">connectors + seeded CI</text>
+
+  <rect x="40" y="267" width="240" height="40" class="cell"/>
+  <text x="160" y="292" text-anchor="middle" class="t">pbms (product)</text>
+  <rect x="290" y="267" width="40" height="40" class="arrow-col"/>
+  <text x="310" y="292" text-anchor="middle" class="t">→</text>
+  <rect x="340" y="267" width="280" height="40" class="cell"/>
+  <text x="480" y="292" text-anchor="middle" class="t">{customer}-pbms-connectors</text>
+  <rect x="630" y="267" width="230" height="40" class="cell"/>
+  <text x="745" y="285" text-anchor="middle" class="s">Extension repo — connectors</text>
+  <text x="745" y="301" text-anchor="middle" class="s">only (not full pbms fork)</text>
+
+  <rect x="40" y="307" width="240" height="40" class="row-alt cell"/>
+  <text x="160" y="332" text-anchor="middle" class="t">Docker Hub (openg2p/*)</text>
+  <rect x="290" y="307" width="40" height="40" class="arrow-col"/>
+  <text x="310" y="332" text-anchor="middle" class="t">→</text>
+  <rect x="340" y="307" width="280" height="40" class="row-alt cell"/>
+  <text x="480" y="332" text-anchor="middle" class="t">Private registry</text>
+  <rect x="630" y="307" width="230" height="40" class="row-alt cell"/>
+  <text x="745" y="332" text-anchor="middle" class="s">GHCR / Docker Hub / Harbor</text>
+
+  <rect x="40" y="370" width="820" height="120" fill="#fff8c5" stroke="#bf8700" stroke-width="1.5" rx="8"/>
+  <text x="60" y="395" class="h1" font-size="14">Key idea</text>
+  <text x="60" y="418" class="t">• Extension repos: customer writes code here. Bundle seeds CI workflows into them at create time.</text>
+  <text x="60" y="440" class="t">• On every push to an extension repo, CI computes version, builds Docker, pushes helm .tgz to</text>
+  <text x="60" y="458" class="t">  {customer}-helm, and pushes changelog to {customer}-versions.</text>
+  <text x="60" y="480" class="t">• Destination repos (helm, versions): no customer code — CI write-only artifact stores.</text>
+</svg>

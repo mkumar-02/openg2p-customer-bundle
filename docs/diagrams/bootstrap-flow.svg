@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 560" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#0969da"/>
+    </marker>
+  </defs>
+  <style>
+    .h1 { font-size: 18px; font-weight: 700; fill: #1f2328; }
+    .t  { font-size: 14px; fill: #24292f; }
+    .s  { font-size: 12px; fill: #57606a; }
+    .step { fill: #fff; stroke: #0969da; stroke-width: 2; rx: 10; }
+    .line { stroke: #0969da; stroke-width: 2.5; fill: none; marker-end: url(#a); }
+    .num  { font-size: 16px; font-weight: 700; fill: #0969da; }
+  </style>
+
+  <text x="320" y="32" text-anchor="middle" class="h1">Bootstrap flow</text>
+  <text x="320" y="54" text-anchor="middle" class="s">Run once per customer org using openg2p-customer-bundle</text>
+
+  <rect x="120" y="75" width="400" height="52" class="step"/>
+  <text x="145" y="106" class="num">1</text>
+  <text x="170" y="100" class="t">Fill schema/customer.manifest.yaml</text>
+  <text x="170" y="118" class="s">customer id, org, repo names, registry type</text>
+  <path d="M320,127 L320,155" class="line"/>
+
+  <rect x="120" y="155" width="400" height="52" class="step"/>
+  <text x="145" y="186" class="num">2</text>
+  <text x="170" y="180" class="t">Create {customer}-helm and {customer}-versions</text>
+  <text x="170" y="198" class="s">destination skeletons (artifact stores)</text>
+  <path d="M320,207 L320,235" class="line"/>
+
+  <rect x="120" y="235" width="400" height="52" class="step"/>
+  <text x="145" y="266" class="num">3</text>
+  <text x="170" y="260" class="t">Create 3 extension repos from packs</text>
+  <text x="170" y="278" class="s">+ seed CI workflows and .openg2p/ci.env</text>
+  <path d="M320,287 L320,315" class="line"/>
+
+  <rect x="120" y="315" width="400" height="52" class="step"/>
+  <text x="145" y="346" class="num">4</text>
+  <text x="170" y="340" class="t">Set GitHub Actions Variables</text>
+  <text x="170" y="358" class="s">admin adds org secrets (PAT, registry token)</text>
+  <path d="M320,367 L320,395" class="line"/>
+
+  <rect x="120" y="395" width="400" height="52" class="step"/>
+  <text x="145" y="426" class="num">5</text>
+  <text x="170" y="420" class="t">Customer pushes to an extension repo</text>
+  <text x="170" y="438" class="s">seeded CI publishes images, .tgz, changelog</text>
+  <path d="M320,447 L320,475" class="line"/>
+
+  <rect x="120" y="475" width="400" height="52" class="step"/>
+  <text x="145" y="506" class="num">6</text>
+  <text x="170" y="500" class="t">Add {customer}-helm in Rancher</text>
+  <text x="170" y="518" class="s">deploy charts; images from private registry</text>
+</svg>

@@ -1,0 +1,80 @@
+# Customer Bundle Manifest
+#
+# Single source of truth for bootstrap. Fill this once per customer org,
+# then run the bootstrap tool (implementation phase).
+#
+# Spec: docs/design.md §8
+#
+# Placeholders use <customer> slug (e.g. moz). Replace before bootstrap.
+
+customer:
+  # Short lowercase slug used in repo names, image prefixes, chart names
+  id: "moz"
+  display_name: "Mozambique MoH"
+  # Private GitHub org / group that will own destination + extension repos
+  org: "moz-openg2p"
+  # v1 supports github only
+  git_host: github
+
+# Which product packs to scaffold
+products:
+  registry: true
+  bridge_connectors: true
+  pbms_connectors: true
+  # Deferred in Draft v1
+  spar: false
+
+# Optional: which bridge connector package stubs to seed
+# (aligned with public g2p-bridge-connectors layout)
+bridge_connectors:
+  - bank-connectors
+  - mapper-connectors
+  - notification-connectors
+  - geo-resolver
+  - agency-allocator
+  - warehouse-allocator
+
+# Optional: which PBMS connector package stubs to seed
+pbms_connectors:
+  - registry-connector
+
+# Repository names created in customer.org
+repos:
+  helm: "moz-helm"
+  versions: "moz-versions"
+  registry: "moz-registry"
+  bridge_connectors: "moz-bridge-connectors"
+  pbms_connectors: "moz-pbms-connectors"
+
+artifacts:
+  container_registry:
+    # ghcr | dockerhub | harbor
+    type: ghcr
+    # Image name prefix, e.g. ghcr.io/moz-openg2p/moz-registry-staff-portal-api
+    prefix: "ghcr.io/moz-openg2p"
+
+ci:
+  # Pin of OpenG2P packaging / changelog scripts (e.g. openg2p-packaging ref)
+  packaging_ref: "v1"
+  # Prepended to docker image names
+  image_prefix: "moz"
+  # Branch in <customer>-helm that stores .tgz + index.yaml (private; no Pages site)
+  helm_branch: "main"
+  # Branch in <customer>-versions that stores changelogs
+  versions_branch: "develop"
+  # Default working branch for extension repos
+  default_branch: "develop"
+
+# Written into each extension repo as .openg2p/ci.env (non-secrets only).
+# Secrets stay in org GitHub Actions secrets — never in this file.
+# Extension-repo CI (seeded by the bundle) uses these on every push.
+#
+# Derived variables (bootstrap expands these from the fields above):
+#   CUSTOMER_ID
+#   PACKAGING_REF
+#   HELM_REPO              # <org>/<repos.helm>
+#   HELM_BRANCH
+#   VERSIONS_REPO          # <org>/<repos.versions>
+#   VERSIONS_BRANCH
+#   CONTAINER_REGISTRY     # artifacts.container_registry.prefix
+#   IMAGE_PREFIX
