@@ -1,0 +1,23 @@
+apiVersion: v2
+name: {{BRIDGE_CHART_NAME}}
+description: |
+  {{CUSTOMER_DISPLAY_NAME}} Bridge — thin wrapper over openg2p-bridge with private Celery image.
+type: application
+version: 0.0.0-develop
+appVersion: "develop"
+
+keywords:
+  - openg2p
+  - bridge
+  - g2p-bridge
+  - {{CUSTOMER_ID}}-bridge
+
+dependencies:
+  - name: openg2p-bridge
+    alias: bridge
+    version: {{BP_VERSION}}
+    repository: https://openg2p.github.io/openg2p-helm
+
+annotations:
+  catalog.cattle.io/display-name: "OpenG2P {{CUSTOMER_DISPLAY_NAME}} Bridge"
+  openg2p.org/add-to-rancher: ""

@@ -1,0 +1,22 @@
+apiVersion: v2
+name: {{PBMS_CHART_NAME}}
+description: |
+  {{CUSTOMER_DISPLAY_NAME}} PBMS — thin wrapper over openg2p-pbms with private API image.
+type: application
+version: 0.0.0-develop
+appVersion: "develop"
+
+keywords:
+  - openg2p
+  - pbms
+  - {{CUSTOMER_ID}}-pbms
+
+dependencies:
+  - name: openg2p-pbms
+    alias: pbms
+    version: {{PBMS_VERSION}}
+    repository: https://openg2p.github.io/openg2p-helm
+
+annotations:
+  catalog.cattle.io/display-name: "OpenG2P {{CUSTOMER_DISPLAY_NAME}} PBMS"
+  openg2p.org/add-to-rancher: ""

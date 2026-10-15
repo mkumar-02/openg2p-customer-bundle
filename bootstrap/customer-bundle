@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+if [ -x "$ROOT/.venv/bin/python3" ]; then
+  export PATH="$ROOT/.venv/bin:$PATH"
+fi
+
+cmd="${1:-}"
+shift || true
+
+render_pack_to() {
+  local pack_name="$1"
+  local manifest="$2"
+  local out="$3"
+  local vars="$ROOT/out/template.env"
+
+  mkdir -p "$(dirname "$out")"
+  python3 "$ROOT/bootstrap/manifest.py" "$manifest" validate
+  python3 "$ROOT/bootstrap/manifest.py" "$manifest" export-env >"$vars"
+  # shellcheck source=lib/render.sh
+  source "$ROOT/bootstrap/lib/render.sh"
+  # shellcheck source=lib/pack.sh
+  source "$ROOT/bootstrap/lib/pack.sh"
+
+  case "$pack_name" in
+    registry) kind="registry" ;;
+    bridge-connectors) kind="bridge-connectors" ;;
+    pbms-connectors) kind="pbms-connectors" ;;
+    *) echo "unknown pack: $pack_name" >&2; exit 1 ;;
+  esac
+
+  render_extension_pack "$ROOT/packs/$pack_name" "$out" "$vars" "$manifest" "$kind"
+  mkdir -p "$out/.openg2p"
+  python3 "$ROOT/bootstrap/manifest.py" "$manifest" ci-env >"$out/.openg2p/ci.env"
+  echo "Rendered: $out"
+}
+
+case "$cmd" in
+  validate)
+    MANIFEST="${1:-$ROOT/schema/customer.manifest.yaml}"
+    exec python3 "$ROOT/bootstrap/manifest.py" "$MANIFEST" validate
+    ;;
+  plan)
+    MANIFEST="${1:-$ROOT/schema/customer.manifest.yaml}"
+    exec python3 "$ROOT/bootstrap/manifest.py" "$MANIFEST" plan
+    ;;
+  render-registry)
+    MANIFEST="${1:-$ROOT/schema/customer.manifest.yaml}"
+    OUT="${2:-$ROOT/out/registry}"
+    render_pack_to registry "$MANIFEST" "$OUT"
+    ;;
+  render-bridge)
+    MANIFEST="${1:-$ROOT/schema/customer.manifest.yaml}"
+    OUT="${2:-$ROOT/out/bridge-connectors}"
+    render_pack_to bridge-connectors "$MANIFEST" "$OUT"
+    ;;
+  render-pbms)
+    MANIFEST="${1:-$ROOT/schema/customer.manifest.yaml}"
+    OUT="${2:-$ROOT/out/pbms-connectors}"
+    render_pack_to pbms-connectors "$MANIFEST" "$OUT"
+    ;;
+  render-all)
+    MANIFEST="${1:-$ROOT/schema/customer.manifest.yaml}"
+    render_pack_to registry "$MANIFEST" "$ROOT/out/registry"
+    render_pack_to bridge-connectors "$MANIFEST" "$ROOT/out/bridge-connectors"
+    render_pack_to pbms-connectors "$MANIFEST" "$ROOT/out/pbms-connectors"
+    ;;
+  smoke)
+    exec bash "$ROOT/bootstrap/smoke-render.sh" "$@"
+    ;;
+  create)
+    exec bash "$ROOT/bootstrap/create.sh" "$@"
+    ;;
+  update-vars)
+    exec bash "$ROOT/bootstrap/update-vars.sh" "$@"
+    ;;
+  add-connector)
+    exec bash "$ROOT/bootstrap/add-connector.sh" "$@"
+    ;;
+  "" | -h | --help)
+    cat <<EOF
+openg2p-customer-bundle bootstrap
+
+Usage:
+  bootstrap/customer-bundle validate [MANIFEST]
+  bootstrap/customer-bundle plan [MANIFEST]
+  bootstrap/customer-bundle render-registry [MANIFEST] [OUT_DIR]
+  bootstrap/customer-bundle render-bridge [MANIFEST] [OUT_DIR]
+  bootstrap/customer-bundle render-pbms [MANIFEST] [OUT_DIR]
+  bootstrap/customer-bundle render-all [MANIFEST]
+  bootstrap/customer-bundle smoke [MANIFEST]
+  bootstrap/customer-bundle create [--manifest PATH] [--dry-run]
+  bootstrap/customer-bundle update-vars [--manifest PATH] [--dry-run]
+  bootstrap/customer-bundle add-connector --product bridge|pbms --name NAME --target DIR
+
+See docs/runbook.md
+EOF
+    ;;
+  *)
+    echo "unknown command: $cmd" >&2
+    exit 1
+    ;;
+esac

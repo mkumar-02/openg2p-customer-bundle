@@ -1,0 +1,4 @@
+kind: registry
+description: Registry extension repo (farmer-registry shape)
+renames:
+  extension: "{{EXTENSION_DIR}}"

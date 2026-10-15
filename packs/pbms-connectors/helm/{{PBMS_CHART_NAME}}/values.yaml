@@ -1,0 +1,9 @@
+# PBMS API image overrides for the openg2p-pbms subchart (alias: pbms).
+# Paths match the farmer-registry overlay pattern (.Values.<alias>.<component>.image.*).
+# If your pinned upstream chart uses different keys, adjust chart-image-paths in
+# .github/workflows/build-publish.yml and these values together.
+pbms:
+  apis:
+    image:
+      repository: {{CONTAINER_REGISTRY}}/{{CONTAINER_NAMESPACE}}/{{IMAGE_PREFIX}}-pbms-apis
+      tag: develop

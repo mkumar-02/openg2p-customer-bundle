@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openg2p.org/schemas/customer.manifest.schema.json",
+  "title": "OpenG2P Customer Bundle Manifest",
+  "description": "Single source of truth for bootstrap of private destination + extension repos.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["customer", "products", "repos", "artifacts"],
+  "properties": {
+    "customer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "org"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{0,62}$",
+          "description": "Short lowercase slug used in repo names, image prefixes, chart names"
+        },
+        "display_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "org": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Private GitHub org that owns destination + extension repos"
+        },
+        "git_host": {
+          "type": "string",
+          "const": "github",
+          "default": "github"
+        }
+      }
+    },
+    "products": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "registry": { "type": "boolean" },
+        "bridge_connectors": { "type": "boolean" },
+        "pbms_connectors": { "type": "boolean" },
+        "spar": { "type": "boolean", "description": "Deferred in v1" }
+      }
+    },
+    "bridge_connectors": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*$"
+      },
+      "uniqueItems": true
+    },
+    "pbms_connectors": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*$"
+      },
+      "uniqueItems": true
+    },
+    "repos": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["helm", "versions"],
+      "properties": {
+        "helm": { "type": "string", "minLength": 1 },
+        "versions": { "type": "string", "minLength": 1 },
+        "registry": { "type": "string", "minLength": 1 },
+        "bridge_connectors": { "type": "string", "minLength": 1 },
+        "pbms_connectors": { "type": "string", "minLength": 1 }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["container_registry"],
+      "properties": {
+        "container_registry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["prefix"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["ghcr", "dockerhub", "harbor"]
+            },
+            "prefix": {
+              "type": "string",
+              "pattern": "^[^/]+/.+",
+              "description": "e.g. ghcr.io/moz-openg2p"
+            }
+          }
+        }
+      }
+    },
+    "ci": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "packaging_ref": { "type": "string", "minLength": 1 },
+        "registry_platform_version": { "type": "string", "minLength": 1 },
+        "bridge_platform_version": { "type": "string", "minLength": 1 },
+        "pbms_platform_version": { "type": "string", "minLength": 1 },
+        "image_prefix": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "helm_branch": { "type": "string", "minLength": 1 },
+        "versions_branch": { "type": "string", "minLength": 1 },
+        "default_branch": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

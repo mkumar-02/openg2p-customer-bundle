@@ -1,0 +1,4 @@
+ARG BP_VERSION={{BP_VERSION}}
+FROM openg2p/openg2p-bridge-celery:${BP_VERSION}
+
+{{CONNECTOR_INSTALL_BLOCK}}

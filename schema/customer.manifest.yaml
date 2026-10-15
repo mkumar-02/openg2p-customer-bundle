@@ -56,6 +56,10 @@ artifacts:
 ci:
   # Pin of OpenG2P packaging / changelog scripts (e.g. openg2p-packaging ref)
   packaging_ref: "v1"
+  # Platform image/chart pins for derived Dockerfiles and wrapper charts
+  registry_platform_version: "1.2.2-rc.489"
+  bridge_platform_version: "develop"
+  pbms_platform_version: "develop"
   # Prepended to docker image names
   image_prefix: "moz"
   # Branch in <customer>-helm that stores .tgz + index.yaml (private; no Pages site)

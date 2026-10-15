@@ -1,0 +1,59 @@
+name: Build & Publish
+
+# Seeded by openg2p-customer-bundle. Private derived API image + helm + changelog.
+
+on:
+  push:
+    branches: ["**"]
+    tags: ["**"]
+    paths-ignore:
+      - "**.md"
+      - "LICENSE"
+      - ".gitignore"
+  workflow_dispatch:
+    inputs:
+      changelog_skip_ai:
+        description: "Skip AI changelog summary"
+        type: boolean
+        default: false
+      changelog_regenerate:
+        description: "Regenerate AI summary for version N.N.N"
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-publish:
+    uses: openg2p/openg2p-packaging/.github/workflows/build-publish.yml@{{PACKAGING_REF}}
+    with:
+      changelog_skip_ai: ${{ inputs.changelog_skip_ai || false }}
+      changelog_regenerate: ${{ inputs.changelog_regenerate || '' }}
+      registry: {{CONTAINER_REGISTRY}}
+      namespace: {{CONTAINER_NAMESPACE}}
+      helm-repo: {{HELM_REPO}}
+      helm-repo-branch: {{HELM_BRANCH}}
+      helm-repo-url: {{HELM_REPO_URL}}
+      changelog-repo: {{VERSIONS_REPO}}
+      changelog-branch: {{VERSIONS_BRANCH}}
+      artifact-source: {{CONTAINER_PREFIX}}
+      packaging-ref: {{PACKAGING_REF}}
+      images: |
+        [
+          {
+            "name": "apis",
+            "repo": "{{CONTAINER_NAMESPACE}}/{{IMAGE_PREFIX}}-pbms-apis",
+            "dockerfile": "docker/apis/Dockerfile"
+          }
+        ]
+      chart-path: helm/{{PBMS_CHART_NAME}}
+      chart-image-paths: |
+        [".pbms.apis.image.tag"]
+      chart-inherit-questions: |
+        {"dependency":"openg2p-pbms","alias":"pbms"}
+    secrets:
+      OPENG2P_BOT_GITHUB_PAT: ${{ secrets.OPENG2P_BOT_GITHUB_PAT }}
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

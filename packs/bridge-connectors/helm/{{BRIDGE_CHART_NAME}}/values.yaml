@@ -1,0 +1,13 @@
+# Bridge Celery image overrides for the openg2p-bridge subchart (alias: bridge).
+# Paths match the farmer-registry overlay pattern (.Values.<alias>.<component>.image.*).
+# If your pinned upstream chart uses different keys, adjust chart-image-paths in
+# .github/workflows/build-publish.yml and these values together.
+bridge:
+  celeryWorker:
+    image:
+      repository: {{CONTAINER_REGISTRY}}/{{CONTAINER_NAMESPACE}}/{{IMAGE_PREFIX}}-bridge-celery
+      tag: develop
+  celeryBeat:
+    image:
+      repository: {{CONTAINER_REGISTRY}}/{{CONTAINER_NAMESPACE}}/{{IMAGE_PREFIX}}-bridge-celery
+      tag: develop

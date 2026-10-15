@@ -1,0 +1,20 @@
+global:
+  registryHostname: {{CUSTOMER_ID}}-registry.example.org
+
+registry:
+  staffApi:
+    image:
+      repository: {{CONTAINER_REGISTRY}}/{{CONTAINER_NAMESPACE}}/{{IMAGE_PREFIX}}-registry-staff-api
+      tag: develop
+  partnerApi:
+    image:
+      repository: {{CONTAINER_REGISTRY}}/{{CONTAINER_NAMESPACE}}/{{IMAGE_PREFIX}}-registry-partner-api
+      tag: develop
+  celeryWorker:
+    image:
+      repository: {{CONTAINER_REGISTRY}}/{{CONTAINER_NAMESPACE}}/{{IMAGE_PREFIX}}-registry-celery
+      tag: develop
+  celeryBeat:
+    image:
+      repository: {{CONTAINER_REGISTRY}}/{{CONTAINER_NAMESPACE}}/{{IMAGE_PREFIX}}-registry-celery
+      tag: develop

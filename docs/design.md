@@ -9,7 +9,7 @@ Each extension repo is created with CI already seeded; on every push the pipelin
 computes a version, builds Docker images, pushes helm charts to `<customer>-helm`,
 and pushes the changelog to `<customer>-versions`.
 
-**Status:** Design only. Implementation follows after this draft is approved.
+**Status:** Implementation complete (phases 1–5). See [docs/runbook.md](runbook.md).
 
 ---
 
@@ -250,7 +250,7 @@ openg2p-customer-bundle/
     design.md                         # this document
   schema/
     customer.manifest.yaml            # normative example + field comments
-    customer.manifest.schema.json     # optional JSON Schema (later)
+    customer.manifest.schema.json     # JSON Schema (validated by bootstrap)
   destinations/                       # (implementation) empty skeletons
     helm/
     versions/
@@ -261,8 +261,8 @@ openg2p-customer-bundle/
   bootstrap/                          # (implementation) create repos, push packs, set CI vars
 ```
 
-Destination skeletons, packs, and bootstrap are **out of scope for this design
-check-in**; they are the implementation phase.
+Destination skeletons, packs, and bootstrap are implemented — see
+[docs/runbook.md](runbook.md).
 
 ---
 
@@ -372,11 +372,11 @@ extension repos; packaging is automatic via the seeded CI.
 
 ## 12. Implementation phases (after design freeze)
 
-1. Destination skeletons (`destinations/helm`, `destinations/versions`)
-2. Registry pack end-to-end (proves docker + helm `.tgz` + changelog)
-3. Bridge-connectors and PBMS-connectors packs
-4. Bootstrap CLI / scripts (`create`, `update-vars`, `add-connector`)
-5. Hardening: path filters, frozen tags, secret checklist, runbook
+1. Destination skeletons (`destinations/helm`, `destinations/versions`) — **done**
+2. Registry pack end-to-end (proves docker + helm `.tgz` + changelog) — **done**
+3. Bridge-connectors and PBMS-connectors packs — **done**
+4. Bootstrap CLI / scripts (`create`, `update-vars`, `add-connector`) — **done**
+5. Hardening: path filters, frozen tags, secret checklist, runbook, JSON Schema — **done**
 
 ---
 

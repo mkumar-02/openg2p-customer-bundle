@@ -1,0 +1,14 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "{{CONNECTOR_PACKAGE}}"
+version = "0.0.1"
+description = "{{CUSTOMER_DISPLAY_NAME}} G2P Bridge {{CONNECTOR_DIR}} (stub)"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/{{CONNECTOR_MODULE}}"]

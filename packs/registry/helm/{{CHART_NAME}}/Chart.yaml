@@ -1,0 +1,22 @@
+apiVersion: v2
+name: {{CHART_NAME}}
+description: |
+  {{CUSTOMER_DISPLAY_NAME}} registry — thin wrapper over openg2p-registry.
+type: application
+version: 0.0.0-develop
+appVersion: "develop"
+
+keywords:
+  - openg2p
+  - registry
+  - {{CUSTOMER_ID}}-registry
+
+dependencies:
+  - name: openg2p-registry
+    alias: registry
+    version: {{RP_VERSION}}
+    repository: https://openg2p.github.io/openg2p-helm
+
+annotations:
+  catalog.cattle.io/display-name: "OpenG2P {{CUSTOMER_DISPLAY_NAME}} Registry"
+  openg2p.org/add-to-rancher: ""

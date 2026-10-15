@@ -1,0 +1,14 @@
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches: [develop, main]
+
+jobs:
+  placeholder:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extension stub present
+        run: test -d "{{EXTENSION_DIR}}"

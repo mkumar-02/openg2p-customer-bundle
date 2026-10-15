@@ -1,0 +1,69 @@
+name: Build & Publish
+
+# Seeded by openg2p-customer-bundle. Calls openg2p-packaging with private destinations.
+
+on:
+  push:
+    branches: ["**"]
+    tags: ["**"]
+    paths-ignore:
+      - "**.md"
+      - "LICENSE"
+      - ".gitignore"
+  workflow_dispatch:
+    inputs:
+      changelog_skip_ai:
+        description: "Skip AI changelog summary"
+        type: boolean
+        default: false
+      changelog_regenerate:
+        description: "Regenerate AI summary for version N.N.N"
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-publish:
+    uses: openg2p/openg2p-packaging/.github/workflows/build-publish.yml@{{PACKAGING_REF}}
+    with:
+      changelog_skip_ai: ${{ inputs.changelog_skip_ai || false }}
+      changelog_regenerate: ${{ inputs.changelog_regenerate || '' }}
+      registry: {{CONTAINER_REGISTRY}}
+      namespace: {{CONTAINER_NAMESPACE}}
+      helm-repo: {{HELM_REPO}}
+      helm-repo-branch: {{HELM_BRANCH}}
+      helm-repo-url: {{HELM_REPO_URL}}
+      changelog-repo: {{VERSIONS_REPO}}
+      changelog-branch: {{VERSIONS_BRANCH}}
+      artifact-source: {{CONTAINER_PREFIX}}
+      packaging-ref: {{PACKAGING_REF}}
+      images: |
+        [
+          {
+            "name": "staff-api",
+            "repo": "{{CONTAINER_NAMESPACE}}/{{IMAGE_PREFIX}}-registry-staff-api",
+            "dockerfile": "docker/staff-api/Dockerfile"
+          },
+          {
+            "name": "partner-api",
+            "repo": "{{CONTAINER_NAMESPACE}}/{{IMAGE_PREFIX}}-registry-partner-api",
+            "dockerfile": "docker/partner-api/Dockerfile"
+          },
+          {
+            "name": "celery",
+            "repo": "{{CONTAINER_NAMESPACE}}/{{IMAGE_PREFIX}}-registry-celery",
+            "dockerfile": "docker/celery/Dockerfile"
+          }
+        ]
+      chart-path: helm/{{CHART_NAME}}
+      chart-image-paths: |
+        [".registry.staffApi.image.tag",".registry.partnerApi.image.tag",".registry.celeryWorker.image.tag",".registry.celeryBeat.image.tag"]
+      chart-inherit-questions: |
+        {"dependency":"openg2p-registry","alias":"registry"}
+    secrets:
+      OPENG2P_BOT_GITHUB_PAT: ${{ secrets.OPENG2P_BOT_GITHUB_PAT }}
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
